@@ -171,7 +171,7 @@ export const TestimonialsSection = () => {
     {
       name: "Sarah Johnson",
       role: "CEO, TechFlow",
-      body: "AdsGrind transformed our digital presence. Our organic traffic grew by 300% in just 6 months.",
+      body: "Adsgrind transformed our digital presence. Our organic traffic grew by 300% in just 6 months.",
       rating: 5
     },
     {
