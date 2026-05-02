@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Footer } from '@/components/layout';
 import { WhatsAppButton, AIChatbot } from '@/components/widgets';
 import { AuthModal } from '@/components/auth/AuthModal';
@@ -8,6 +8,14 @@ import { AuthModal } from '@/components/auth/AuthModal';
 export function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const [isAuthOpen, setIsAuthOpen] = useState(false);
   const [authMode, setAuthMode] = useState<'login' | 'signup'>('login');
+
+  useEffect(() => {
+    // Force scroll to top on mount (e.g., refresh)
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
   const openAuth = (mode: 'login' | 'signup') => {
     setAuthMode(mode);
