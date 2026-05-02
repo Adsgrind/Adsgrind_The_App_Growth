@@ -8,6 +8,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 
+import { sendContactEmail } from '@/app/actions/contact';
+
 const contactSchema = z.object({
   name: z.string().min(2, 'Name is required'),
   email: z.string().email('Invalid email address'),
@@ -24,9 +26,15 @@ export default function ContactPage() {
   });
 
   const onSubmit = async (data: ContactFormData) => {
-    console.log('Form submitted:', data);
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const result = await sendContactEmail(data);
+      if (!result.success) {
+        alert(result.error || 'Failed to send message. Please try again.');
+      }
+    } catch (error) {
+      console.error('Submission error:', error);
+      alert('An unexpected error occurred. Please try again later.');
+    }
   };
 
   return (
@@ -67,7 +75,7 @@ export default function ContactPage() {
                     </div>
                     <div>
                         <div className="text-[10px] text-slate-500 font-bold uppercase tracking-widest mb-1">Email Us</div>
-                        <div className="text-lg font-bold text-white">hello@adsgrind.com</div>
+                        <div className="text-lg font-bold text-white">business@adsgrind.com</div>
                     </div>
                 </div>
             </GlassCard>

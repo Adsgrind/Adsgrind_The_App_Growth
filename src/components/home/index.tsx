@@ -228,12 +228,11 @@ export const CTASection = () => {
 
       <div className="container mx-auto px-6">
         <GlassCard className="max-w-5xl mx-auto p-12 md:p-20 text-center relative overflow-hidden border-brand-accent-start/10 dark:border-brand-accent-start/20">
-          <h2 className="font-display font-bold text-4xl md:text-6xl mb-8 leading-tight text-white">Ready to Scale Your <br /><span className="text-gradient">Brand to New Heights?</span></h2>
+          <h2 className="font-display font-bold text-4xl md:text-6xl mb-8 leading-[1.2] text-white overflow-visible">Ready to Scale Your <br /><span className="text-gradient inline-block pb-1">Brand to New Heights?</span></h2>
           <p className="text-slate-600 dark:text-slate-400 text-lg mb-12 max-w-2xl mx-auto">
             Stop guessing and start growing. Our data-driven strategies are waiting for you. Get a free audit and consultation today.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-            <Button variant="liquid" size="lg" className="w-full sm:w-auto px-12">Claim Your Free Audit</Button>
             <Button variant="outline" size="lg" className="w-full sm:w-auto px-12">Contact Sales</Button>
           </div>
 
@@ -373,7 +372,7 @@ export const AboutUsSection = () => {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              className="aspect-square rounded-[2rem] overflow-hidden glass-card p-8 relative border-white/5 bg-white/[0.02] flex flex-col"
+              className="md:aspect-square h-auto rounded-[2rem] overflow-hidden glass-card p-6 md:p-8 relative border-white/5 bg-white/[0.02] flex flex-col"
             >
               <div className="flex justify-between items-center mb-8">
                 <div className="flex items-center gap-2">
@@ -445,7 +444,7 @@ export const AboutUsSection = () => {
               </div>
 
               <div className="mt-8 pt-8 border-t border-white/5">
-                <div className="text-4xl font-display font-black text-white italic tracking-tighter">RESULTS DRIVEN</div>
+                <div className="text-3xl md:text-4xl font-display font-black text-white italic tracking-tighter">RESULTS DRIVEN</div>
                 <p className="text-[10px] text-slate-500 uppercase tracking-[0.3em] mt-2">Data-Backed Excellence</p>
               </div>
             </motion.div>
