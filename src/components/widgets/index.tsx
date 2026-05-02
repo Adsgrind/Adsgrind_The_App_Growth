@@ -9,7 +9,7 @@ import { getChatResponse } from '@/app/actions/chat';
 export const WhatsAppButton = () => {
   return (
     <motion.a
-      href="https://wa.me/919625982835?text=Hi%20AdsGrind%2C%20I%27d%20like%20to%20inquire%20about%20your%20services."
+      href="https://wa.me/919625982835?text=Hi%20ADSGRIND%2C%20I%27d%20like%20to%20inquire%20about%20your%20services."
       target="_blank"
       rel="noopener noreferrer"
       initial={{ scale: 0, opacity: 0 }}

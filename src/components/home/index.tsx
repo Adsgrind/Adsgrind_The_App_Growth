@@ -189,7 +189,7 @@ export const TestimonialsSection = () => {
     {
       name: "Sarah Johnson",
       role: "CEO, TechFlow",
-      body: "Adsgrind transformed our digital presence. Our organic traffic grew by 300% in just 6 months.",
+      body: "ADSGRIND transformed our digital presence. Our organic traffic grew by 300% in just 6 months.",
       rating: 5
     },
     {
@@ -366,7 +366,7 @@ export const AboutUsSection = () => {
               <span className="text-gradient">Marketing</span> Powerhouse
             </h2>
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">
-              Adsgrind is a global user acquisition company helping mobile apps achieve scalable growth. We bridge the gap between premium advertisers and high-performing publishers through proprietary technology and strategic campaign management.
+              ADSGRIND is a global user acquisition company helping mobile apps achieve scalable growth. We bridge the gap between premium advertisers and high-performing publishers through proprietary technology and strategic campaign management.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {values.map((v, i) => (

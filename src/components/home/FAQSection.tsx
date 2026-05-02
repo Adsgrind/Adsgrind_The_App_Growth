@@ -20,7 +20,7 @@ const FAQ_DATA = [
     },
     {
         question: "What countries do you support?",
-        answer: "Adsgrind has global coverage. Our strongest regions include India, Southeast Asia (SEA), Middle East, Europe, United States, and Latin America."
+        answer: "ADSGRIND has global coverage. Our strongest regions include India, Southeast Asia (SEA), Middle East, Europe, United States, and Latin America."
     },
     {
         question: "How do you ensure traffic quality?",
@@ -52,7 +52,7 @@ const FAQSection = () => {
                             <span className="text-gradient">Questions</span>
                         </h2>
                         <p className="text-slate-400 text-lg mb-4 md:mb-8">
-                            Everything you need to know about scaling your app growth with Adsgrind. Still have questions? Reach out to our team.
+                            Everything you need to know about scaling your app growth with ADSGRIND. Still have questions? Reach out to our team.
                         </p>
                     </div>
 

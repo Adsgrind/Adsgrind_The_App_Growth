@@ -67,7 +67,7 @@ const AudienceReach = () => {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 xl:gap-16 items-start">
                     {/* Visual Globe Column */}
                     <div className="lg:col-span-6 xl:col-span-7">
-                        <div className="relative aspect-square md:aspect-video lg:aspect-square xl:aspect-video w-full rounded-3xl overflow-hidden bg-[#080808] border border-white/5">
+                        <div className="relative aspect-square md:aspect-video lg:aspect-square xl:aspect-video w-full rounded-3xl overflow-hidden bg-[#080808] border border-white/5 flex items-center justify-center">
                             <InteractiveGlobe />
                             {/* Overlay to ensure no text/clutter on globe as requested */}
                             <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-60"></div>

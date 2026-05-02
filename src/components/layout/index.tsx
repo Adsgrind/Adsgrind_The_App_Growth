@@ -54,15 +54,20 @@ export const Navbar = ({ onLogin, onSignup }: NavbarProps) => {
           <div className="relative w-10 h-10 overflow-hidden rounded-full border border-white/20">
             <Image 
               src="/logo/2ccbcd53-e176-41fc-b3cb-70c3f0620511.jpg" 
-              alt="AdsGrind Logo" 
+              alt="ADSGRIND Logo" 
               fill
               sizes="40px"
               className="object-cover"
             />
           </div>
-          <span className="font-display font-bold text-xl tracking-tight hidden sm:block text-white uppercase italic">
-            ADSGRIND
-          </span>
+          <div className="flex flex-col items-start leading-none hidden sm:flex">
+            <span className="font-display font-bold text-[18px] tracking-[0.5px] text-white">
+              ADSGRIND
+            </span>
+            <span className="text-[12px] font-normal text-white/60 tracking-[0.3px] uppercase mt-[2px]">
+              The App Growth
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Nav */}
@@ -168,12 +173,16 @@ export const Footer = () => {
             <div className="relative w-8 h-8 overflow-hidden rounded-full border border-white/10">
               <Image 
                 src="/logo/2ccbcd53-e176-41fc-b3cb-70c3f0620511.jpg" 
-                alt="AdsGrind Logo" 
+                alt="ADSGRIND Logo" 
                 fill
+                sizes="32px"
                 className="object-cover"
               />
             </div>
-            <span className="font-display font-bold text-lg text-white uppercase italic">ADSGRIND</span>
+            <div className="flex flex-col items-start leading-none">
+              <span className="font-display font-bold text-lg text-white">ADSGRIND</span>
+              <span className="text-[10px] font-normal text-white/50 tracking-wider uppercase mt-[2px]">The App Growth</span>
+            </div>
           </Link>
           <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
             Elevating brands through high-performance digital marketing, strategic SEO, and technical excellence.
@@ -184,7 +193,7 @@ export const Footer = () => {
           <h4 className="font-semibold mb-6 text-white">Services</h4>
           <ul className="space-y-4 text-sm text-slate-600 dark:text-slate-400">
             <li><Link href="/services" className="hover:text-brand-accent-start transition-colors">Search Engine Optimization</Link></li>
-            <li><Link href="/services" className="hover:text-brand-accent-start transition-colors">Pay-Per-Click Advertising</Link></li>
+            <li><Link href="/services" className="hover:text-brand-accent-start transition-colors">Mobile Apps Advertising</Link></li>
             <li><Link href="/services" className="hover:text-brand-accent-start transition-colors">Social Media Marketing</Link></li>
             <li><Link href="/services" className="hover:text-brand-accent-start transition-colors">Content Strategy</Link></li>
           </ul>

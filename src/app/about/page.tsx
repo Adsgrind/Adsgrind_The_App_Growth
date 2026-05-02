@@ -77,7 +77,7 @@ export default function AboutPage() {
             transition={{ delay: 0.2 }}
             className="text-slate-400 text-xl leading-relaxed"
           >
-            Adsgrind is a high-performance user acquisition company dedicated to bridging the gap between premium advertisers and high-performing publishers. We leverage proprietary technology to drive measurable, scalable, and sustainable growth for the world's most ambitious mobile apps.
+            ADSGRIND is a high-performance user acquisition company dedicated to bridging the gap between premium advertisers and high-performing publishers. We leverage proprietary technology to drive measurable, scalable, and sustainable growth for the world's most ambitious mobile apps.
           </motion.p>
         </div>
 
@@ -111,7 +111,7 @@ export default function AboutPage() {
 
         {/* Core Values */}
         <div className="mb-12 md:mb-32 text-center">
-            <h2 className="text-4xl font-bold mb-8 md:mb-16 uppercase italic text-white">The Adsgrind Standard</h2>
+            <h2 className="text-4xl font-bold mb-8 md:mb-16 uppercase italic text-white">The ADSGRIND Standard</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {VALUES.map((v, i) => (
                     <motion.div 

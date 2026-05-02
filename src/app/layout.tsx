@@ -3,6 +3,7 @@ import { Inter, Poppins, Syne, DM_Sans } from "next/font/google";
 import "./globals.css";
 import { LayoutWrapper } from "@/components/layout/LayoutWrapper";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import Script from 'next/script';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -27,8 +28,8 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://adsgrind.com"),
-  title: "Adsgrind The App Growth",
-  description: "Welcome to Adsgrind, where innovation meets impact in the world of advertising. With a passion for creativity and a drive for results, we specialize in crafting bespoke strategies that captivate audiences and deliver tangible growth for your brand. From cutting-edge digital campaigns to traditional media solutions, our seasoned team is committed to grinding out success for every client. Let's grind together and make your brand shine in the competitive market.",
+  title: "ADSGRIND The App Growth",
+  description: "Welcome to ADSGRIND, where innovation meets impact in the world of advertising. With a passion for creativity and a drive for results, we specialize in crafting bespoke strategies that captivate audiences and deliver tangible growth for your brand. From cutting-edge digital campaigns to traditional media solutions, our seasoned team is committed to grinding out success for every client. Let's grind together and make your brand shine in the competitive market.",
 };
 
 export default function RootLayout({
@@ -43,7 +44,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script
+        <Script
+          id="theme-initializer"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
               (function() {

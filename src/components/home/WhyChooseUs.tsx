@@ -36,7 +36,7 @@ const WhyChooseUs = () => {
                             whileInView={{ opacity: 1 }}
                             className="text-xs font-bold uppercase tracking-[0.3em] text-brand-orange mb-4 block"
                         >
-                            The Adsgrind Advantage
+                            THE ADSGRIND ADVANTAGE
                         </motion.span>
                         <h2 className="font-display font-bold text-4xl md:text-6xl mb-4 md:mb-8 uppercase italic text-white leading-tight">
                             Why <span className="text-gradient">Choose</span> Us

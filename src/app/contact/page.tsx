@@ -61,7 +61,7 @@ export default function ContactPage() {
             transition={{ delay: 0.1 }}
             className="text-slate-400 text-xl max-w-2xl mx-auto leading-relaxed"
           >
-            Ready to reach the next level? Connect with our performance experts and discover how Adsgrind can transform your UA strategy.
+            Ready to reach the next level? Connect with our performance experts and discover how ADSGRIND can transform your UA strategy.
           </motion.p>
         </div>
 
@@ -132,7 +132,7 @@ export default function ContactPage() {
                     </div>
                     <h2 className="text-4xl font-bold mb-6 text-white uppercase italic">Strategy Received!</h2>
                     <p className="text-slate-400 text-lg mb-10 max-w-sm">
-                        Thank you for reaching out. A growth engineer from Adsgrind will review your goals and contact you within 24 hours.
+                        Thank you for reaching out. A growth engineer from ADSGRIND will review your goals and contact you within 24 hours.
                     </p>
                     <Button variant="outline" size="lg" onClick={() => reset()} className="px-12 border-white/10 text-white">Send Another Message</Button>
                 </motion.div>
@@ -201,7 +201,7 @@ export default function ContactPage() {
                   <Button 
                     type="submit" 
                     variant="liquid" 
-                    className="w-full py-5 text-xl font-bold uppercase italic tracking-widest gap-3"
+                    className="w-full py-4 md:py-5 text-base md:text-xl font-bold uppercase italic tracking-widest gap-2 md:gap-3 whitespace-nowrap"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? 'Sending Strategy...' : (
@@ -214,23 +214,76 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Map Section */}
-        <div className="h-[500px] w-full rounded-[3rem] overflow-hidden glass-card p-0 relative group">
-            <div className="absolute inset-0 bg-brand-red/10 z-10 pointer-events-none group-hover:bg-transparent transition-colors duration-1000"></div>
-            <div className="absolute inset-0 flex items-center justify-center bg-black overflow-hidden">
-                <div className="absolute inset-0 opacity-20 grayscale brightness-50 contrast-125">
-                    <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover" alt="Global Operations" />
-                </div>
-                <div className="relative z-20 flex flex-col items-center">
-                    <div className="w-20 h-20 rounded-full bg-brand-red flex items-center justify-center animate-bounce shadow-[0_0_50px_rgba(238,29,35,0.6)]">
-                        <MapPin size={40} className="text-white" />
-                    </div>
-                    <div className="mt-6 px-10 py-3 bg-black/80 backdrop-blur-xl rounded-full border border-brand-red/30 font-display font-black text-lg text-white uppercase italic tracking-widest">
-                        AdsGrind HQ
-                    </div>
-                </div>
+        {/* Interactive Map Section */}
+        <section className="mb-20">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
+            <div className="text-center">
+              <h2 className="text-3xl md:text-5xl font-bold text-white uppercase italic mb-4">Our <span className="text-gradient">Location</span></h2>
+              <p className="text-slate-400 max-w-xl mx-auto">Strategically positioned to manage global growth operations from our central hub.</p>
             </div>
-        </div>
+
+            <div className="relative group rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl h-[500px]">
+              {/* Dark Styled Google Map Embed */}
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13998.403565656565!2d77.2625!3d28.7058!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfb63897d9e87%3A0x6444444444444444!2sBhajanpura%2C%20Delhi%20110053!5e0!3m2!1sen!2sin!4v1714690000000!5m2!1sen!2sin"
+                className="absolute inset-0 w-full h-full border-0 grayscale brightness-50 contrast-125 invert-[0.9] hue-rotate-[180deg]"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
+
+              {/* UI Suppression Shields (Hides 'Open in Maps', 'View larger map', and Google branding) */}
+              <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-[#050505] to-transparent pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#050505] to-transparent pointer-events-none"></div>
+              
+              {/* Interactive Area Mask (Prevents clicks on Google branding/links while allowing pan/zoom) */}
+              <div className="absolute top-0 left-0 w-48 h-20 pointer-events-auto cursor-default"></div>
+              <div className="absolute bottom-0 right-0 w-48 h-12 pointer-events-auto cursor-default"></div>
+
+              {/* Glassmorphism Overlay Filter */}
+              <div className="absolute inset-0 bg-[#050505]/40 pointer-events-none"></div>
+
+              {/* Custom HQ Marker */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="relative flex flex-col items-center">
+                  {/* Pulse Animation */}
+                  <div className="absolute inset-0 -translate-y-4">
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 h-20 bg-brand-red/20 rounded-full animate-ping"></div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-brand-red/10 rounded-full animate-pulse"></div>
+                  </div>
+                  
+                  {/* Pin Core */}
+                  <motion.div 
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="relative z-20 w-12 h-12 rounded-full bg-[#050505] border-2 border-brand-red flex items-center justify-center shadow-[0_0_30px_rgba(238,29,35,0.6)]"
+                  >
+                    <MapPin className="text-brand-red" size={24} />
+                  </motion.div>
+
+                  {/* HQ Label Card */}
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    className="mt-4 px-6 py-2 bg-black/80 backdrop-blur-xl rounded-full border border-white/10 shadow-2xl flex items-center gap-2"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-brand-success animate-pulse"></div>
+                    <span className="text-xs font-bold text-white uppercase tracking-widest">Adsgrind HQ</span>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Map Controls Protection Overlay */}
+              <div className="absolute bottom-6 left-6 p-4 bg-black/60 backdrop-blur-md rounded-2xl border border-white/5 text-[10px] text-white/40 font-bold uppercase tracking-[0.2em]">
+                Secure Node Location
+              </div>
+            </div>
+          </motion.div>
+        </section>
       </div>
     </div>
   );

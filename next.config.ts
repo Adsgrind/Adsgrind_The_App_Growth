@@ -3,7 +3,7 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   devIndicators: false,
   experimental: {
-    // turbo configuration removed as it is unrecognized in this version
+    allowedDevOrigins: ['172.21.181.125'],
   },
 };
 

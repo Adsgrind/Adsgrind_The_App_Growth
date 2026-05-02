@@ -60,7 +60,7 @@ export default function GuidePage() {
                 In 2026, user acquisition is no longer just about volume. It's about engineering sustainable growth. As the mobile landscape becomes increasingly fragmented across new GEOs and devices, the ability to scale while maintaining a healthy ROI has become the ultimate competitive advantage.
               </p>
               <p>
-                Scalable user acquisition is the process of consistently growing your app's user base using systems that can handle increased investment without diminishing returns. This guide breaks down the framework we use at Adsgrind to deliver millions of high-quality installs for global category leaders.
+                Scalable user acquisition is the process of consistently growing your app's user base using systems that can handle increased investment without diminishing returns. This guide breaks down the framework we use at ADSGRIND to deliver millions of high-quality installs for global category leaders.
               </p>
             </div>
           </section>
@@ -210,7 +210,7 @@ export default function GuidePage() {
 
           {/* Adsgrind Approach */}
           <section className="mb-20 text-center">
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 uppercase italic tracking-tight">The Adsgrind Approach</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6 uppercase italic tracking-tight">The ADSGRIND Approach</h2>
             <p className="text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
               We don't just sell traffic. We partner with apps to build sustainable growth engines. By combining our network of 1000+ publishers with proprietary performance engineering, we deliver scale that sticks.
             </p>
@@ -249,7 +249,7 @@ export default function GuidePage() {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-brand-red/20 blur-[100px] -z-10"></div>
               <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-6 uppercase italic">Ready to Scale?</h2>
               <p className="text-slate-400 mb-10 max-w-lg mx-auto">
-                Join 100+ global brands that use Adsgrind to drive consistent, high-quality user growth.
+                Join 100+ global brands that use ADSGRIND to drive consistent, high-quality user growth.
               </p>
               <Button 
                 variant="liquid" 
@@ -268,7 +268,7 @@ export default function GuidePage() {
 
       {/* Footer Navigation */}
       <footer className="py-10 border-t border-white/5 text-center">
-        <p className="text-slate-600 text-[10px] uppercase tracking-[0.4em]">© 2026 Adsgrind Strategy Resources</p>
+        <p className="text-slate-600 text-[10px] uppercase tracking-[0.4em]">© 2026 ADSGRIND Strategy Resources</p>
       </footer>
     </div>
   );
