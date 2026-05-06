@@ -14,10 +14,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = "inline-flex items-center justify-center rounded-lg font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-accent-start disabled:pointer-events-none disabled:opacity-50 active:scale-95";
     
     const variants = {
-      primary: "bg-brand-accent-start text-white hover:bg-brand-accent-end bg-gradient-brand shadow-lg hover:shadow-brand-accent-start/20",
-      outline: "border border-brand-accent-start/20 bg-transparent text-slate-100 hover:bg-brand-accent-start/5",
-      ghost: "bg-transparent text-slate-100 hover:bg-brand-accent-start/5",
-      liquid: "liquid-glass-btn text-white",
+      primary: "bg-brand-orange text-black hover:bg-brand-orange-light shadow-orange-glow transition-all",
+      outline: "border border-white/10 bg-transparent text-white hover:bg-white/5",
+      ghost: "bg-transparent text-white hover:bg-white/5",
+      liquid: "bg-brand-orange/10 border border-brand-orange/20 text-brand-orange hover:bg-brand-orange/20 transition-all",
     };
 
     const sizes = {

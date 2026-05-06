@@ -58,5 +58,15 @@
     "message": "user: I'm a Brand / App Owner | model: Having trouble connecting right now. Reach us directly at business@adsgrind.com or via WhatsApp. | user: I need App Growth | model: Having trouble connecting right now. Reach us directly at business@adsgrind.com or via WhatsApp. | user: How does CPA work? | model: Having trouble connecting right now. Reach us directly at business@adsgrind.com or via WhatsApp.",
     "status": "New",
     "createdAt": "2026-05-04T21:26:14.139Z"
+  },
+  {
+    "id": "eeae8db9-5357-476c-80a7-8da0e615f952",
+    "name": "Rohit Yadav",
+    "email": "yadavboy167@gmail.com",
+    "company": "https://adsgrind.com",
+    "budget": "5k-20k",
+    "message": "MARKETS: Global / Tier 1 | GOAL: undefined | MESSAGE: Goal: Scale Installs\n\nNotes: I want traffic",
+    "status": "New",
+    "createdAt": "2026-05-06T23:00:18.074Z"
   }
 ]

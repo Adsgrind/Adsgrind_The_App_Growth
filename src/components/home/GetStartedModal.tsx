@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, CheckCircle2, Loader2, Building2, User, Mail, MessageSquare, ChevronDown } from 'lucide-react';
+import { X, Send, CheckCircle2, Loader2, Building2, User, Mail, MessageSquare, ChevronDown, Zap, Target, ArrowRight } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -38,7 +38,6 @@ export function GetStartedModal({ isOpen, onClose }: GetStartedModalProps) {
     resolver: zodResolver(contactSchema),
   });
 
-  // Handle ESC key to close
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -47,7 +46,6 @@ export function GetStartedModal({ isOpen, onClose }: GetStartedModalProps) {
     return () => window.removeEventListener('keydown', handleEsc);
   }, [onClose]);
 
-  // Prevent scroll when modal is open
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -73,7 +71,6 @@ export function GetStartedModal({ isOpen, onClose }: GetStartedModalProps) {
         setIsSuccess(true);
         setTimeout(() => {
           onClose();
-          // Reset states after animation finishes
           setTimeout(() => {
             setIsSuccess(false);
             reset();
@@ -93,32 +90,47 @@ export function GetStartedModal({ isOpen, onClose }: GetStartedModalProps) {
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
-          {/* Backdrop */}
+          {/* Premium Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/60 backdrop-blur-md"
+            className="absolute inset-0 bg-black/80 backdrop-blur-xl"
           />
+
+          {/* Background Ambient Glows */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden">
+             <motion.div 
+               animate={{ 
+                 scale: [1, 1.2, 1],
+                 opacity: [0.1, 0.2, 0.1] 
+               }}
+               transition={{ duration: 8, repeat: Infinity }}
+               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-brand-orange/10 blur-[160px] rounded-full"
+             />
+          </div>
 
           {/* Modal Container */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-[500px] overflow-hidden rounded-2xl sm:rounded-[2rem] bg-[#000000] border border-white/10 shadow-2xl"
+            transition={{ type: "spring", damping: 20, stiffness: 200 }}
+            className="relative w-full max-w-[550px] overflow-hidden rounded-[2.5rem] bg-[#050505] border border-white/5 shadow-orange-glow"
           >
-            {/* Institutional Backdrop: White/Grey Glow */}
-            <div className="absolute -top-24 -left-24 w-48 h-48 bg-white/5 blur-[80px] rounded-full pointer-events-none" />
-            <div className="absolute -bottom-24 -right-24 w-48 h-48 bg-white/5 blur-[80px] rounded-full pointer-events-none" />
+            {/* Animated Light Reflection */}
+            <motion.div 
+              animate={{ x: ['-200%', '200%'] }}
+              transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+              className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand-orange/20 to-transparent pointer-events-none"
+            />
 
-            <div className="relative p-6 sm:p-10">
+            <div className="relative p-8 sm:p-12">
               {/* Close Button */}
               <button
                 onClick={onClose}
-                className="absolute top-6 right-6 p-2 rounded-full hover:bg-white/5 text-white/40 hover:text-white transition-colors"
+                className="absolute top-8 right-8 p-3 rounded-xl bg-white/5 text-white/30 hover:text-white transition-all hover:scale-110 active:scale-95 z-50"
               >
                 <X size={20} />
               </button>
@@ -127,137 +139,149 @@ export function GetStartedModal({ isOpen, onClose }: GetStartedModalProps) {
                 {!isSuccess ? (
                   <motion.div
                     key="form"
-                    initial={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: 10 }}
+                    exit={{ opacity: 0, x: 20 }}
                   >
-                    <div className="mb-8">
-                      <h2 className="text-3xl font-display font-bold text-white mb-2 uppercase tracking-tighter">
+                    <div className="mb-12">
+                      <div className="flex items-center gap-3 mb-4">
+                         <div className="w-8 h-8 rounded-lg bg-brand-orange/10 flex items-center justify-center text-brand-orange border border-brand-orange/20">
+                            <Target size={16} />
+                         </div>
+                         <span className="text-brand-orange text-[9px] font-bold uppercase tracking-[0.4em]">Audit Protocol</span>
+                      </div>
+                      <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-3 uppercase tracking-tighter leading-none">
                         GET STARTED.
                       </h2>
-                      <p className="text-[10px] text-white/30 font-bold uppercase tracking-[0.4em]">
-                        Specify your growth objective.
+                      <p className="text-white/40 text-sm font-medium">
+                        Specify your growth objective for a custom analysis.
                       </p>
                     </div>
 
-                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-                      {/* Name Field */}
-                      <div className="space-y-1.5">
-                        <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 ml-1">Full Name</label>
-                        <div className="relative group">
-                          <User className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-white transition-colors" size={16} />
-                          <input
-                            {...register('name')}
-                            type="text"
-                            placeholder="John Doe"
-                            className={cn(
-                              "w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-3.5 text-sm text-white placeholder:text-white/10 focus:outline-none focus:border-white focus:ring-1 focus:ring-white/10 transition-all uppercase tracking-widest",
-                              errors.name && "border-white/20"
-                            )}
-                          />
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                      {/* Name & Company Grid */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 ml-2">Full Name</label>
+                          <div className="relative group">
+                            <User className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-orange/40 group-focus-within:text-brand-orange transition-colors" size={16} />
+                            <input
+                              {...register('name')}
+                              type="text"
+                              placeholder="Name"
+                              className={cn(
+                                "w-full bg-white/[0.03] border border-white/5 rounded-2xl px-14 py-4 text-sm text-white placeholder:text-white/10 focus:outline-none focus:border-brand-orange/50 focus:bg-white/[0.05] transition-all tracking-wide",
+                                errors.name && "border-red-500/50"
+                              )}
+                            />
+                          </div>
                         </div>
-                        {errors.name && <p className="text-white/40 text-[9px] uppercase font-bold tracking-widest ml-1">{errors.name.message}</p>}
-                      </div>
 
-                      {/* Company Field */}
-                      <div className="space-y-1.5">
-                        <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 ml-1">Company Name</label>
-                        <div className="relative group">
-                          <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-white transition-colors" size={16} />
-                          <input
-                            {...register('company')}
-                            type="text"
-                            placeholder="AdsGrind Inc."
-                            className={cn(
-                              "w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-3.5 text-sm text-white placeholder:text-white/10 focus:outline-none focus:border-white focus:ring-1 focus:ring-white/10 transition-all uppercase tracking-widest",
-                              errors.company && "border-white/20"
-                            )}
-                          />
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 ml-2">Company</label>
+                          <div className="relative group">
+                            <Building2 className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-orange/40 group-focus-within:text-brand-orange transition-colors" size={16} />
+                            <input
+                              {...register('company')}
+                              type="text"
+                              placeholder="Entity"
+                              className={cn(
+                                "w-full bg-white/[0.03] border border-white/5 rounded-2xl px-14 py-4 text-sm text-white placeholder:text-white/10 focus:outline-none focus:border-brand-orange/50 focus:bg-white/[0.05] transition-all tracking-wide",
+                                errors.company && "border-red-500/50"
+                              )}
+                            />
+                          </div>
                         </div>
-                        {errors.company && <p className="text-white/40 text-[9px] uppercase font-bold tracking-widest ml-1">{errors.company.message}</p>}
                       </div>
 
                       {/* Email Field */}
-                      <div className="space-y-1.5">
-                        <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 ml-1">Email Address</label>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 ml-2">Enterprise Email</label>
                         <div className="relative group">
-                          <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-white transition-colors" size={16} />
+                          <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-orange/40 group-focus-within:text-brand-orange transition-colors" size={16} />
                           <input
                             {...register('email')}
                             type="email"
                             placeholder="john@example.com"
                             className={cn(
-                              "w-full bg-white/[0.02] border border-white/10 rounded-xl px-12 py-3.5 text-sm text-white placeholder:text-white/10 focus:outline-none focus:border-white focus:ring-1 focus:ring-white/10 transition-all uppercase tracking-widest",
-                              errors.email && "border-white/20"
+                              "w-full bg-white/[0.03] border border-white/5 rounded-2xl px-14 py-4 text-sm text-white placeholder:text-white/10 focus:outline-none focus:border-brand-orange/50 focus:bg-white/[0.05] transition-all tracking-wide",
+                              errors.email && "border-red-500/50"
                             )}
                           />
                         </div>
-                        {errors.email && <p className="text-white/40 text-[9px] uppercase font-bold tracking-widest ml-1">{errors.email.message}</p>}
                       </div>
 
                       {/* Budget Field */}
-                      <div className="space-y-1.5">
-                        <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 ml-1">Monthly Budget (Optional)</label>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 ml-2">Monthly Growth Budget</label>
                         <div className="relative group">
-                          <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-white transition-colors" size={16} />
+                          <Zap className="absolute left-5 top-1/2 -translate-y-1/2 text-brand-orange/40 group-focus-within:text-brand-orange transition-colors" size={16} />
                           <select
                             {...register('budget')}
-                            className={cn(
-                              "w-full bg-[#141414] border border-white/10 rounded-xl px-12 py-3.5 text-sm text-white focus:outline-none focus:border-white focus:ring-1 focus:ring-white/10 transition-all appearance-none cursor-pointer uppercase tracking-widest",
-                              errors.budget && "border-white/20"
-                            )}
+                            className="w-full bg-[#0A0A0A] border border-white/5 rounded-2xl px-14 py-4 text-sm text-white focus:outline-none focus:border-brand-orange/50 focus:bg-white/[0.05] transition-all appearance-none cursor-pointer tracking-wide"
                           >
-                            <option value="" className="bg-[#1A1A1A]">Select your budget</option>
-                            <option value="<$5k" className="bg-[#1A1A1A]">Less than $5,000</option>
-                            <option value="$5k-$20k" className="bg-[#1A1A1A]">$5,000 - $20,000</option>
-                            <option value="$20k-$50k" className="bg-[#1A1A1A]">$20,000 - $50,000</option>
-                            <option value="$50k+" className="bg-[#1A1A1A]">$50,000+</option>
+                            <option value="" className="bg-[#0A0A0A]">Select budget scale</option>
+                            <option value="<$5k" className="bg-[#0A0A0A]">$5,000 - $20,000</option>
+                            <option value="$20k-$50k" className="bg-[#0A0A0A]">$20,000 - $50,000</option>
+                            <option value="$50k-$100k" className="bg-[#0A0A0A]">$50,000 - $100,000</option>
+                            <option value="$100k+" className="bg-[#0A0A0A]">$100,000+</option>
                           </select>
-                          <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-white/20 pointer-events-none" size={18} />
+                          <ChevronDown className="absolute right-5 top-1/2 -translate-y-1/2 text-white/20 pointer-events-none" size={18} />
                         </div>
                       </div>
 
                       {/* Message Field */}
-                      <div className="space-y-1.5">
-                        <label className="text-[9px] font-bold uppercase tracking-[0.3em] text-white/30 ml-1">Message</label>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 ml-2">Growth Objectives</label>
                         <div className="relative group">
-                          <MessageSquare className="absolute left-4 top-4 text-white/20 group-focus-within:text-white transition-colors" size={16} />
+                          <MessageSquare className="absolute left-5 top-5 text-brand-orange/40 group-focus-within:text-brand-orange transition-colors" size={16} />
                           <textarea
                             {...register('message')}
                             rows={4}
-                            placeholder="Tell us about your project goals..."
+                            placeholder="Describe your current scale challenges..."
                             className={cn(
-                              "w-full bg-[#141414] border border-white/10 rounded-xl px-12 py-4 text-sm text-white placeholder:text-white/10 focus:outline-none focus:border-white focus:ring-1 focus:ring-white/10 transition-all resize-none uppercase tracking-widest",
-                              errors.message && "border-white/20"
+                              "w-full bg-white/[0.03] border border-white/5 rounded-2xl px-14 py-5 text-sm text-white placeholder:text-white/10 focus:outline-none focus:border-brand-orange/50 focus:bg-white/[0.05] transition-all resize-none tracking-wide",
+                              errors.message && "border-red-500/50"
                             )}
                           />
                         </div>
-                        {errors.message && <p className="text-white/40 text-[9px] uppercase font-bold tracking-widest ml-1">{errors.message.message}</p>}
                       </div>
 
                       {error && (
-                        <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-white/60 text-[10px] font-bold uppercase tracking-widest text-center">
+                        <motion.div 
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="p-4 rounded-xl bg-red-500/5 border border-red-500/20 text-red-400 text-xs font-bold text-center"
+                        >
                           {error}
-                        </div>
+                        </motion.div>
                       )}
 
-                      <Button
+                      <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="w-full bg-white hover:bg-white/90 text-black font-bold h-14 rounded-xl shadow-2xl transition-all flex items-center justify-center gap-2 group text-[11px] uppercase tracking-[0.3em]"
+                        className="group relative w-full h-16 bg-brand-orange text-black font-bold rounded-2xl overflow-hidden shadow-orange-glow transition-all active:scale-[0.98]"
                       >
-                        {isSubmitting ? (
-                          <>
-                            <Loader2 size={16} className="animate-spin" />
-                            <span>Processing...</span>
-                          </>
-                        ) : (
-                          <>
-                            <span>SEND MESSAGE</span>
-                            <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                          </>
-                        )}
-                      </Button>
+                         <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                         <div className="relative flex items-center justify-center gap-3">
+                            {isSubmitting ? (
+                              <>
+                                <Loader2 size={18} className="animate-spin" />
+                                <span className="uppercase text-[11px] tracking-[0.3em]">Processing Audit...</span>
+                              </>
+                            ) : (
+                              <>
+                                <span className="uppercase text-[11px] tracking-[0.3em]">Request Growth Audit</span>
+                                <motion.div
+                                  animate={{ x: [0, 5, 0] }}
+                                  transition={{ repeat: Infinity, duration: 2 }}
+                                >
+                                  <ArrowRight size={18} />
+                                </motion.div>
+                              </>
+                            )}
+                         </div>
+                      </button>
                     </form>
                   </motion.div>
                 ) : (
@@ -265,28 +289,27 @@ export function GetStartedModal({ isOpen, onClose }: GetStartedModalProps) {
                     key="success"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    className="flex flex-col items-center justify-center py-12 text-center"
+                    className="flex flex-col items-center justify-center py-20 text-center"
                   >
-                    <div className="relative mb-6">
+                    <div className="relative mb-10">
                       <motion.div
                         initial={{ scale: 0 }}
                         animate={{ scale: 1 }}
                         transition={{ type: "spring", damping: 12, stiffness: 200, delay: 0.2 }}
-                        className="w-20 h-20 rounded-full bg-green-500/10 border border-green-500/20 flex items-center justify-center text-green-500"
+                        className="w-24 h-24 rounded-3xl bg-brand-orange/10 border border-brand-orange/20 flex items-center justify-center text-brand-orange"
                       >
-                        <CheckCircle2 size={40} />
+                        <CheckCircle2 size={48} />
                       </motion.div>
                       <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: [0, 1, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        className="absolute inset-0 rounded-full bg-green-500/20 blur-xl"
+                        transition={{ duration: 2, repeat: Infinity }}
+                        className="absolute inset-0 rounded-full bg-brand-orange/20 blur-2xl"
                       />
                     </div>
-                    <h3 className="text-2xl font-display font-bold text-white mb-2 italic">MESSAGE SENT!</h3>
-                    <p className="text-white/50 max-w-[280px]">
-                      We'll get back to you within 24 hours. Get ready for explosive growth.
+                    <h3 className="text-3xl font-display font-bold text-white mb-4 uppercase tracking-tight italic">Protocol Initiated.</h3>
+                    <p className="text-white/40 max-w-[320px] text-sm leading-relaxed">
+                      Our engineering team is analyzing your request. A senior performance strategist will contact you within 24 hours.
                     </p>
                   </motion.div>
                 )}

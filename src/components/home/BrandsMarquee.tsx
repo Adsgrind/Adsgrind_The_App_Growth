@@ -13,85 +13,107 @@ const brands = [
   { name: 'Super.com', logo: '/images/super.com.jpeg' },
 ];
 
-export const BrandsMarquee = () => {
+const BrandLogo = ({ brand }: { brand: typeof brands[0] }) => {
   return (
-    <section className="py-12 md:py-20 bg-[#030303] relative overflow-hidden">
-      {/* Background Subtle Noise/Texture */}
-      <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
-      
-      <div className="container mx-auto px-6 mb-10 text-center relative z-10">
-        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-[0.4em] mb-3 block opacity-60">Trusted by Global Leaders</span>
-      </div>
+    <motion.div
+      initial="initial"
+      whileHover="hover"
+      className="relative group cursor-pointer flex-shrink-0 px-10 md:px-16"
+    >
+      <div className="flex flex-col items-center">
+        <div className="relative w-28 h-10 md:w-40 md:h-14 transition-all duration-700 ease-out">
+          {/* Logo Wrapper */}
+          <motion.div 
+            variants={{
+              initial: { filter: 'grayscale(1)', opacity: 0.4, scale: 1 },
+              hover: { filter: 'grayscale(0)', opacity: 1, scale: 1.05 }
+            }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="absolute inset-0 flex items-center justify-center"
+          >
+            <Image
+              src={brand.logo}
+              alt={brand.name}
+              fill
+              sizes="(max-width: 768px) 112px, 160px"
+              className="object-contain"
+            />
+          </motion.div>
 
-      <div className="relative z-10 w-full group">
-        {/* Infinite Scrolling Row */}
-        <div className="flex overflow-hidden relative">
-            <motion.div
-                animate={{
-                    x: [0, -1000],
-                }}
-                transition={{
-                    x: {
-                        repeat: Infinity,
-                        repeatType: "loop",
-                        duration: 40,
-                        ease: "linear",
-                    },
-                }}
-                className="flex flex-nowrap gap-10 md:gap-16 py-10 px-6 items-center"
-            >
-                {[...brands, ...brands, ...brands, ...brands].map((brand, idx) => (
-                <motion.div
-                    key={`${brand.name}-${idx}`}
-                    whileHover={{ 
-                        y: -4, 
-                        scale: 1.05,
-                        transition: { duration: 0.35, ease: [0.25, 1, 0.3, 1] }
-                    }}
-                    className="flex-shrink-0 relative group/brand"
-                >
-                    {/* Glow Layer */}
-                    <div className="absolute -inset-4 bg-white/5 rounded-[20px] blur-2xl opacity-0 group-hover/brand:opacity-100 transition-opacity duration-500" />
-                    
-                    <div className="relative flex flex-col items-center group/brand">
-                        <div className="relative bg-white/[0.04] backdrop-blur-md border border-white/[0.08] rounded-xl px-5 py-4 md:px-9 md:py-7 flex items-center justify-center shadow-[0_8px_30px_rgba(0,0,0,0.4),inset_0_0_20px_rgba(255,255,255,0.03)] transition-all duration-500 group-hover/brand:bg-white/[0.06] group-hover/brand:border-white/[0.15] group-hover/brand:translate-y-[-4px] overflow-hidden min-w-[140px] md:min-w-[200px]">
-                            {/* Logo - Full Visibility Always */}
-                            <div className="relative h-6 w-16 md:h-10 md:w-32 flex items-center justify-center transition-all duration-500">
-                                <Image
-                                    src={brand.logo}
-                                    alt={brand.name}
-                                    fill
-                                    sizes="(max-width: 768px) 60px, 120px"
-                                    className="object-contain transition-all duration-500"
-                                />
-                            </div>
-                        </div>
+          {/* Luxury Glossy Sweep Effect */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none rounded-lg">
+             <motion.div 
+               variants={{
+                 initial: { x: '-150%', skewX: -25, opacity: 0 },
+                 hover: { x: '250%', skewX: -25, opacity: 1 }
+               }}
+               transition={{ duration: 1.2, ease: "easeInOut" }}
+               className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/30 to-transparent z-10"
+             />
+          </div>
 
-                        {/* Glossy Brand Name - Below Box Reveal */}
-                        <div className="mt-4 opacity-0 group-hover/brand:opacity-100 translate-y-2 group-hover/brand:translate-y-0 transition-all duration-500 text-center">
-                            <span 
-                                className="text-[10px] font-bold uppercase tracking-[0.3em] bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-white/60 animate-shine"
-                                style={{
-                                    backgroundImage: 'linear-gradient(90deg, #ffffff 0%, #eaeaea 30%, #ffffff 60%, #cccccc 100%)',
-                                    backgroundSize: '200% auto',
-                                    WebkitBackgroundClip: 'text',
-                                    WebkitTextFillColor: 'transparent',
-                                    textShadow: '0 0 10px rgba(255,255,255,0.2)'
-                                }}
-                            >
-                                {brand.name}
-                            </span>
-                        </div>
-                    </div>
-                </motion.div>
-                ))}
-            </motion.div>
+          {/* Ambient Orange Glow */}
+          <motion.div 
+            variants={{
+              initial: { opacity: 0, scale: 0.8 },
+              hover: { opacity: 1, scale: 1 }
+            }}
+            transition={{ duration: 0.7 }}
+            className="absolute -inset-6 bg-brand-orange/5 blur-2xl rounded-full -z-10" 
+          />
         </div>
 
-        {/* Side Fades for Scroll Hint */}
-        <div className="absolute inset-y-0 left-0 w-24 md:w-64 bg-gradient-to-r from-[#030303] via-[#030303]/80 to-transparent z-20 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-24 md:w-64 bg-gradient-to-l from-[#030303] via-[#030303]/80 to-transparent z-20 pointer-events-none" />
+        {/* Brand Name Reveal - ONLY on Hover */}
+        <div className="mt-6 h-4 flex items-center justify-center overflow-hidden">
+           <motion.span 
+             variants={{
+               initial: { opacity: 0, y: 10 },
+               hover: { opacity: 1, y: 0 }
+             }}
+             transition={{ duration: 0.5, ease: "easeOut" }}
+             className="text-[9px] md:text-[10px] font-bold text-white uppercase tracking-[0.3em] whitespace-nowrap pointer-events-none"
+           >
+             {brand.name}
+           </motion.span>
+        </div>
       </div>
+    </motion.div>
+  );
+};
+
+export const BrandsMarquee = () => {
+  return (
+    <section className="py-20 md:py-32 bg-[#000000] relative overflow-hidden border-y border-white/5">
+      <div className="container mx-auto px-6 mb-16 text-center relative z-10">
+        <motion.span 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="text-brand-orange text-[10px] font-bold uppercase tracking-[0.4em] mb-4 block"
+        >
+          Institutional Trust
+        </motion.span>
+        <h2 className="text-2xl md:text-3xl font-bold text-white/80 uppercase tracking-tight">
+          Powering Global App <span className="text-white/20">Growth Entities</span>
+        </h2>
+      </div>
+
+      <div className="relative z-10 w-full pause-on-hover">
+        <div className="flex overflow-hidden">
+          <div className="flex flex-nowrap items-center py-4 animate-marquee-infinite">
+            {/* Double the list for seamless loop */}
+            {[...brands, ...brands, ...brands, ...brands, ...brands, ...brands].map((brand, idx) => (
+              <BrandLogo key={`${brand.name}-${idx}`} brand={brand} />
+            ))}
+          </div>
+        </div>
+
+        {/* Side Fades - Premium Glass Feel */}
+        <div className="absolute inset-y-0 left-0 w-32 md:w-80 bg-gradient-to-r from-black via-black/80 to-transparent z-20 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-32 md:w-80 bg-gradient-to-l from-black via-black/80 to-transparent z-20 pointer-events-none" />
+      </div>
+
+      {/* Ambient Lighting */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 h-1/2 bg-brand-orange/5 blur-[120px] rounded-full pointer-events-none" />
     </section>
   );
 };

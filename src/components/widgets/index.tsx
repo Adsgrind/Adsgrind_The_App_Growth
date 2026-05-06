@@ -14,7 +14,7 @@ export const WhatsAppButton = () => (
     initial={{ x: 20, opacity: 0 }}
     animate={{ x: 0, opacity: 1 }}
     transition={{ delay: 0.5, duration: 0.6 }}
-    className="fixed bottom-[92px] right-6 z-50 flex items-center group"
+    className="fixed bottom-[92px] right-6 z-[100] flex items-center pointer-events-none"
   >
     {/* Tooltip */}
     <span className="mr-3 px-3 py-1.5 bg-black/80 backdrop-blur-md border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap">
@@ -27,7 +27,7 @@ export const WhatsAppButton = () => (
       rel="noopener noreferrer"
       whileHover={{ scale: 1.08 }}
       whileTap={{ scale: 0.94 }}
-      className="w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-[0_8px_25px_rgba(37,211,102,0.4)] cursor-pointer relative"
+      className="w-14 h-14 bg-[#25D366] rounded-full flex items-center justify-center text-white shadow-[0_8px_25px_rgba(37,211,102,0.4)] cursor-pointer relative pointer-events-auto group"
     >
       {/* Subtle Breathing Glow */}
       <motion.div 
@@ -247,7 +247,7 @@ export const AIChatbot = () => {
       initial={{ x: 20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 0.6, duration: 0.6 }}
-      className="fixed bottom-6 right-6 z-50 flex items-center group"
+      className="fixed bottom-6 right-6 z-[100] flex items-center pointer-events-none"
     >
       {/* Tooltip */}
       {!isOpen && (
@@ -260,7 +260,7 @@ export const AIChatbot = () => {
         onClick={() => { setIsOpen((o) => !o); setHasPulsed(false); }}
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.94 }}
-        className="relative w-14 h-14 bg-[#FF3B3B] rounded-full flex items-center justify-center text-white shadow-[0_8px_25px_rgba(255,59,59,0.35)]"
+        className="relative w-14 h-14 bg-[#FF3B3B] rounded-full flex items-center justify-center text-white shadow-[0_8px_25px_rgba(255,59,59,0.35)] pointer-events-auto group"
       >
         <motion.div animate={{ rotate: isOpen ? 90 : 0 }} transition={{ duration: 0.2 }}>
           {isOpen ? <X size={24} /> : <Bot size={28} />}
@@ -273,7 +273,7 @@ export const AIChatbot = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="absolute bottom-20 right-0 w-[calc(100vw-2rem)] sm:w-[24rem] bg-black border border-white/10 flex flex-col shadow-2xl z-50"
+            className="absolute bottom-20 right-0 w-[calc(100vw-2rem)] sm:w-[24rem] bg-black border border-white/10 flex flex-col shadow-2xl z-[101]"
             style={{ maxHeight: "calc(100vh - 8rem)" }}
           >
             {/* Header */}

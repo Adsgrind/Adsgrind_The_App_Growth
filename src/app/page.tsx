@@ -2,40 +2,30 @@
 
 import { 
   HeroSection, 
+  TrustSection,
+  CaseStudiesSection,
+  ServicesSection,
+  DataPerformanceSection,
+  ConversionSection,
   BrandsMarquee, 
-  StatsSection, 
-  AboutUsSection,
-  MarketOpportunity,
-  ServicesPreview, 
-  TrafficSources,
-  AdFormats,
-  AudienceReach,
-  CaseStudy,
-  TestimonialsSection, 
-  WhyChooseUs,
   FAQSection,
-  ConnectSection, 
-  CTASection 
+  LiveIntelligenceSection,
+  WhyClientsStaySection
 } from '@/components/home';
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <main className="flex flex-col min-h-screen bg-black overflow-hidden">
       <HeroSection />
       <BrandsMarquee />
-      <StatsSection />
-      <AboutUsSection />
-      <MarketOpportunity />
-      <ServicesPreview />
-      <TrafficSources />
-      <AdFormats />
-      <AudienceReach />
-      <CaseStudy />
-      <WhyChooseUs />
-      <TestimonialsSection />
+      <LiveIntelligenceSection />
+      <TrustSection />
+      <CaseStudiesSection />
+      <ServicesSection />
+      <WhyClientsStaySection />
+      <DataPerformanceSection />
+      <ConversionSection />
       <FAQSection />
-      <ConnectSection />
-      <CTASection />
-    </div>
+    </main>
   );
 }

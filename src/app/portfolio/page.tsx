@@ -1,288 +1,261 @@
 "use client";
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, TrendingUp, Users, DollarSign, Zap, Shield, BarChart2, Globe } from 'lucide-react';
-import { Button, GlassCard, cn } from '@/components/ui';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, TrendingUp, Users, DollarSign, Zap, Shield, BarChart2, Globe, Filter } from 'lucide-react';
+import { Button, cn, Counter } from '@/components/ui';
 import { useModals } from '@/context/ModalContext';
 
-import { FintechStrategyModal } from '@/components/portfolio/FintechStrategyModal';
-import { EcoRetailFrameworkModal } from '@/components/portfolio/EcoRetailFrameworkModal';
-import { GamingEngagementModal } from '@/components/portfolio/GamingEngagementModal';
-import { SaaSStrategyModal } from '@/components/portfolio/SaaSStrategyModal';
+type Industry = 'All' | 'Fintech' | 'Gaming' | 'SaaS';
 
 interface CaseStudy {
   id: string;
-  badge: string;
-  badgeColor: string;
+  industry: Industry;
+  campaignType: string;
+  budgetRange: string;
+  geos: string;
   title: string;
-  subtitle: string;
   description: string;
-  metrics: { label: string; value: string; color: string }[];
+  metrics: { label: string; value: string; trend?: string }[];
   tags: string[];
-  onView: () => void;
 }
 
+const CASE_STUDIES: CaseStudy[] = [
+  {
+    id: 'fintech-scale',
+    industry: 'Fintech',
+    campaignType: 'CPA / High-LTV Acquisition',
+    budgetRange: '$50k - $200k / mo',
+    geos: 'USA, UK, Canada',
+    title: 'Scaling Neo-Bank to 38K Verified Users',
+    description: 'We engineered a deep-funnel CPA strategy targeting verified KYC completions. By bypassing low-intent traffic nodes and focusing on OEM inventory, we crushed the initial CAC target by 42%.',
+    metrics: [
+      { label: 'Total Installs', value: '38,000+' },
+      { label: 'CAC Reduction', value: '42%', trend: 'down' },
+      { label: 'ROI Multiple', value: '3.8x' },
+    ],
+    tags: ['CPA', 'OEM Inventory', 'KYC Optimization'],
+  },
+  {
+    id: 'gaming-launch',
+    industry: 'Gaming',
+    campaignType: 'CPE / Engagement Scaling',
+    budgetRange: '$100k+ / mo',
+    geos: 'SEA, Brazil, India',
+    title: 'Global AAA Launch: 500K Level Completions',
+    description: 'For a major mobile RPG launch, we deployed a Cost-Per-Engagement protocol. The campaign drove half a million level-10 completions within 7 days, ensuring top-tier store ranking.',
+    metrics: [
+      { label: 'Level Completions', value: '500,000+' },
+      { label: 'Day-7 Retention', value: '+28%', trend: 'up' },
+      { label: 'Fraud Rate', value: '<0.1%' },
+    ],
+    tags: ['CPE', 'Hyper-Growth', 'Store Ranking'],
+  },
+  {
+    id: 'saas-b2b',
+    industry: 'SaaS',
+    campaignType: 'Direct-Response / ROAS',
+    budgetRange: '$20k - $80k / mo',
+    geos: 'Germany, France, Nordics',
+    title: 'B2B Productivity: 5x ROAS via Direct DSP',
+    description: 'Strategic European market entry for an AI-driven productivity suite. Utilizing direct DSP nodes and custom creative optimization, we achieved a sustainable 5x return on ad spend.',
+    metrics: [
+      { label: 'ROAS', value: '5.2x' },
+      { label: 'Trial Conversion', value: '31%', trend: 'up' },
+      { label: 'Active Markets', value: '12 EU' },
+    ],
+    tags: ['ROAS', 'DSP Scaling', 'B2B'],
+  }
+];
+
 export default function PortfolioPage() {
-  const [isFintechModalOpen, setIsFintechModalOpen] = useState(false);
-  const [isEcoModalOpen, setIsEcoModalOpen] = useState(false);
-  const [isGamingModalOpen, setIsGamingModalOpen] = useState(false);
-  const [isSaaSModalOpen, setIsSaaSModalOpen] = useState(false);
   const { openGetStarted } = useModals();
+  const [filter, setFilter] = useState<Industry>('All');
 
-  const caseStudies: CaseStudy[] = [
-    {
-      id: 'fintech',
-      badge: 'Featured',
-      badgeColor: 'bg-white/5 border-white/20 text-white',
-      title: 'Fintech CPA Campaign',
-      subtitle: 'United States · 30 Days',
-      description: 'Scaled a US-based Fintech app\'s user base with a focus on high-LTV verified actions across Native and Video traffic channels, crushing the client\'s CPA targets.',
-      metrics: [
-        { label: 'Verified Conversions', value: '38K+', color: 'text-white' },
-        { label: 'Avg. CPA', value: '$4.20', color: 'text-white/60' },
-        { label: 'Conversion Rate', value: '4.8%', color: 'text-white/40' },
-        { label: 'CAC Reduction', value: '42%', color: 'text-white' },
-      ],
-      tags: ['CPA', 'Fintech', 'Native', 'Video'],
-      onView: () => setIsFintechModalOpen(true),
-    },
-    {
-      id: 'gaming',
-      badge: 'CPE Engineering',
-      badgeColor: 'bg-white/5 border-white/20 text-white',
-      title: 'Global Game Launch CPE',
-      subtitle: 'Southeast Asia · Week 1',
-      description: 'Engineered a Cost-Per-Engagement strategy for a AAA mobile title, driving 500k+ level completions within the first week with aggressive publisher activation.',
-      metrics: [
-        { label: 'Total Completions', value: '500K+', color: 'text-white' },
-        { label: 'Day-7 Retention', value: '+28%', color: 'text-white/60' },
-        { label: 'Publisher Reach', value: '150+', color: 'text-white/40' },
-        { label: 'Fraud Rate', value: '0.1%', color: 'text-white' },
-      ],
-      tags: ['CPE', 'Gaming', 'SEA', 'Retention'],
-      onView: () => setIsGamingModalOpen(true),
-    },
-    {
-      id: 'eco',
-      badge: 'CPI Scale',
-      badgeColor: 'bg-white/5 border-white/20 text-white',
-      title: 'Eco-Retail App Growth',
-      subtitle: 'Southeast Asia · Multi-Channel',
-      description: 'Multi-channel app install campaign across SEA market, reducing eCPI by 35% while increasing D30 retention by 20% through intelligent audience segmentation.',
-      metrics: [
-        { label: 'eCPI Reduction', value: '35%↓', color: 'text-white' },
-        { label: 'D30 Retention', value: '+20%', color: 'text-white/60' },
-        { label: 'GEOs Reached', value: '8', color: 'text-white/40' },
-        { label: 'Total Installs', value: '120K+', color: 'text-white' },
-      ],
-      tags: ['CPI', 'E-Commerce', 'Retention', 'SEA'],
-      onView: () => setIsEcoModalOpen(true),
-    },
-    {
-      id: 'saas',
-      badge: 'OEM Traffic',
-      badgeColor: 'bg-white/5 border-white/20 text-white',
-      title: 'SaaS Market Entry',
-      subtitle: 'Europe · B2B Productivity',
-      description: 'Strategic European market entry for a B2B productivity app using premium OEM traffic, achieving a 5x Return on Ad Spend through precise demographic targeting.',
-      metrics: [
-        { label: 'ROAS', value: '5x', color: 'text-white' },
-        { label: 'Market Reach', value: '12 EU', color: 'text-white/60' },
-        { label: 'OEM Partners', value: '18+', color: 'text-white/40' },
-        { label: 'Trial Conversion', value: '31%', color: 'text-white' },
-      ],
-      tags: ['OEM', 'SaaS', 'B2B', 'Europe'],
-      onView: () => setIsSaaSModalOpen(true),
-    },
-  ];
-
-  const containerVariants = {
-    hidden: {},
-    show: {
-      transition: { staggerChildren: 0.1 },
-    },
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 24 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
-  } as const;
+  const filteredStudies = filter === 'All' 
+    ? CASE_STUDIES 
+    : CASE_STUDIES.filter(s => s.industry === filter);
 
   return (
-    <div className="bg-[#000000] min-h-screen overflow-x-hidden">
-      {/* Modals */}
-      <FintechStrategyModal isOpen={isFintechModalOpen} onClose={() => setIsFintechModalOpen(false)} />
-      <EcoRetailFrameworkModal isOpen={isEcoModalOpen} onClose={() => setIsEcoModalOpen(false)} />
-      <GamingEngagementModal isOpen={isGamingModalOpen} onClose={() => setIsGamingModalOpen(false)} />
-      <SaaSStrategyModal isOpen={isSaaSModalOpen} onClose={() => setIsSaaSModalOpen(false)} />
-
-      {/* Hero */}
-      <section className="pt-32 pb-24 px-6 relative overflow-hidden flex flex-col items-center text-center">
-        <div className="max-w-5xl mx-auto flex flex-col items-center">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-10">
-            <span className="text-[11px] font-bold uppercase tracking-[0.4em] text-white/30 border-b border-white/20 pb-2">Evidence of Impact</span>
-          </motion.div>
-          <motion.h1
+    <main className="bg-black min-h-screen pt-32 pb-20">
+      <div className="container mx-auto px-6">
+        {/* Hero Section */}
+        <div className="max-w-5xl mx-auto mb-24 text-center">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-display font-bold text-5xl md:text-8xl mb-12 uppercase leading-[0.95] text-white tracking-[-0.04em]"
           >
-            Performance<br />
-            <span className="text-white/40">Case Studies.</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-white/50 text-xl md:text-2xl max-w-3xl leading-relaxed mx-auto"
-          >
-            Explosive growth for world-class mobile apps. Data-driven success stories across Fintech, Gaming, SaaS, and E-commerce.
-          </motion.p>
-
-          {/* Aggregate stats strip - Centered */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="mt-16 flex flex-wrap justify-center gap-8 md:gap-12"
-          >
-            {[
-              { icon: <Users size={16} />, label: '538K+ Total Installs' },
-              { icon: <TrendingUp size={16} />, label: '42% Avg. CAC Reduction' },
-              { icon: <Shield size={16} />, label: '< 0.2% Avg. Fraud Rate' },
-              { icon: <Globe size={16} />, label: '20+ GEOs Reached' },
-            ].map((s, i) => (
-              <div key={i} className="flex items-center gap-3 text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">
-                <span className="text-white/20">{s.icon}</span>
-                {s.label}
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Case Study Cards Grid */}
-      <section className="pb-20 px-6">
-        <div className="max-w-7xl mx-auto w-full">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-0 border border-white/10"
-          >
-            {caseStudies.map((cs, idx) => (
-              <motion.div 
-                key={cs.id} 
-                variants={cardVariants} 
-                className={cn(
-                    "group cursor-pointer p-12 hover:bg-white/[0.02] transition-all duration-500",
-                    idx % 2 === 0 && "md:border-r border-white/10",
-                    idx < 2 && "border-b border-white/10",
-                    idx >= 2 && "border-b md:border-b-0 border-white/10"
-                )}
-                onClick={cs.onView}
-              >
-                  {/* Top row: badge + title */}
-                  <div className="flex flex-col gap-6 mb-10">
-                    <span className="self-start text-[10px] font-bold uppercase tracking-[0.4em] text-white/30 border-b border-white/20 pb-1">
-                      {cs.badge}
-                    </span>
-                    <div>
-                      <h2 className="text-3xl font-bold text-white uppercase tracking-tight leading-none group-hover:translate-x-2 transition-transform duration-500">
-                        {cs.title}
-                      </h2>
-                      <p className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em] mt-4">{cs.subtitle}</p>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <p className="text-white/40 text-sm leading-relaxed mb-12 max-w-md">{cs.description}</p>
-
-                  {/* Metrics grid */}
-                  <div className="grid grid-cols-2 gap-8 mb-12">
-                    {cs.metrics.map((m, i) => (
-                      <div key={i} className="flex flex-col">
-                        <div className="text-3xl font-bold text-white tracking-tighter mb-2">{m.value}</div>
-                        <div className="text-[9px] font-bold text-white/20 uppercase tracking-[0.3em]">{m.label}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-4">
-                    {cs.tags.map((tag) => (
-                      <span key={tag} className="text-[9px] font-bold uppercase tracking-widest text-white/20 border border-white/10 px-3 py-1">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Mid-page proof strip */}
-      <section className="py-24 border-y border-white/10 bg-white/[0.01]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-            {[
-              { value: '38K+', label: 'CPA Conversions', icon: <BarChart2 size={20} /> },
-              { value: '5x', label: 'Avg. ROAS', icon: <DollarSign size={20} /> },
-              { value: '500K+', label: 'CPE Completions', icon: <Zap size={20} /> },
-              { value: '42%', label: 'Lower CAC', icon: <TrendingUp size={20} /> },
-            ].map((stat, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex flex-col items-center text-center gap-4"
-              >
-                <div className="w-10 h-10 border border-white/20 flex items-center justify-center text-white/40">
-                  {stat.icon}
-                </div>
-                <div className="text-4xl font-bold text-white tracking-tighter">{stat.value}</div>
-                <div className="text-[10px] font-bold text-white/30 uppercase tracking-[0.3em] leading-tight">{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-40 px-6 relative overflow-hidden">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="space-y-12"
-          >
-            <span className="inline-block text-[11px] font-bold uppercase tracking-[0.5em] text-white/30">
-              Inquiry Protocol
+            <span className="px-4 py-1.5 rounded-full border border-brand-orange/30 bg-brand-orange/5 text-brand-orange text-[10px] font-bold uppercase tracking-[0.3em] inline-block mb-8">
+              Evidence of Impact
             </span>
-            <h2 className="text-5xl md:text-8xl font-bold text-white uppercase tracking-[-0.04em] leading-none">
-              Deploy Your<br />
-              <span className="text-white/40">Success Case.</span>
-            </h2>
-            <p className="text-white/40 text-xl max-w-2xl mx-auto leading-relaxed">
-              Join the apps already scaling with Adsgrind infrastructure. Get a free strategy session and see how we can replicate these results for your growth goals.
+            <h1 className="font-display font-bold text-5xl md:text-8xl mb-10 uppercase text-white leading-none tracking-tight">
+              Performance<br /><span className="text-white/40 font-light italic">Case Studies.</span>
+            </h1>
+            <p className="text-white/50 text-xl md:text-2xl leading-relaxed max-w-3xl mx-auto font-medium">
+              Institutional-grade growth for world-class mobile apps. Data-backed success stories across high-impact verticals.
             </p>
-            <div className="flex justify-center pt-8">
-              <button 
-                className="px-20 py-6 bg-white text-black text-[12px] font-bold uppercase tracking-[0.4em] transition-all hover:bg-white/90" 
-                onClick={openGetStarted}
-              >
-                Initiate Growth Audit
-              </button>
-            </div>
           </motion.div>
         </div>
-      </section>
-    </div>
+
+        {/* Filters */}
+        <div className="flex flex-wrap items-center justify-center gap-4 mb-20">
+           {['All', 'Fintech', 'Gaming', 'SaaS'].map((f) => (
+             <button
+               key={f}
+               onClick={() => setFilter(f as Industry)}
+               className={cn(
+                 "px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all duration-300 border",
+                 filter === f 
+                  ? "bg-brand-orange border-brand-orange text-black shadow-orange-glow" 
+                  : "bg-surface-2 border-white/10 text-white/40 hover:text-white hover:border-white/20"
+               )}
+             >
+               {f}
+             </button>
+           ))}
+        </div>
+
+        {/* Case Studies Grid */}
+        <div className="grid grid-cols-1 gap-12">
+          <AnimatePresence mode="popLayout">
+            {filteredStudies.map((cs, idx) => (
+              <motion.div
+                key={cs.id}
+                layout
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4 }}
+                className="bg-surface-2 border border-white/5 rounded-[3rem] overflow-hidden group hover:bg-surface-3 transition-all duration-700"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                   {/* Left: Content */}
+                   <div className="p-10 lg:p-16 flex flex-col justify-between">
+                      <div>
+                         <div className="flex items-center gap-4 mb-8">
+                            <span className="text-brand-orange text-[10px] font-bold uppercase tracking-[0.4em]">{cs.industry}</span>
+                            <div className="w-1 h-1 bg-white/10 rounded-full" />
+                            <span className="text-white/30 text-[10px] font-bold uppercase tracking-[0.4em]">{cs.campaignType}</span>
+                         </div>
+                         <h2 className="text-3xl md:text-5xl font-bold text-white uppercase tracking-tight leading-none mb-8 group-hover:text-brand-orange transition-colors">
+                           {cs.title}
+                         </h2>
+                         <p className="text-white/50 text-lg leading-relaxed mb-12">
+                           {cs.description}
+                         </p>
+                      </div>
+
+                      <div className="space-y-6">
+                         <div className="flex flex-wrap gap-8 py-8 border-y border-white/5">
+                            <div>
+                               <div className="text-[10px] text-white/20 font-bold uppercase tracking-widest mb-1">Budget Range</div>
+                               <div className="text-white font-bold">{cs.budgetRange}</div>
+                            </div>
+                            <div>
+                               <div className="text-[10px] text-white/20 font-bold uppercase tracking-widest mb-1">GEOs Targeted</div>
+                               <div className="text-white font-bold">{cs.geos}</div>
+                            </div>
+                         </div>
+                         <div className="flex flex-wrap gap-4">
+                            {cs.tags.map(tag => (
+                              <span key={tag} className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[9px] font-bold text-white/40 uppercase tracking-widest">
+                                {tag}
+                              </span>
+                            ))}
+                         </div>
+                      </div>
+                   </div>
+
+                   {/* Right: Visualization & Results */}
+                   <div className="bg-black/40 p-10 lg:p-16 flex flex-col justify-center relative">
+                      <div className="absolute inset-0 bg-brand-orange/5 blur-[100px] rounded-full pointer-events-none" />
+                      
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 relative z-10 mb-16">
+                         {cs.metrics.map((m, i) => (
+                           <div key={i} className="text-center lg:text-left">
+                              <div className="flex items-baseline gap-1 justify-center lg:justify-start">
+                                 <span className="text-4xl md:text-5xl font-bold text-white tracking-tighter">{m.value}</span>
+                                 {m.trend && (
+                                   <span className={cn(
+                                     "text-xs font-bold uppercase",
+                                     m.trend === 'up' ? "text-green-500" : "text-brand-orange"
+                                   )}>
+                                     {m.trend === 'up' ? '↑' : '↓'}
+                                   </span>
+                                 )}
+                              </div>
+                              <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest mt-2">{m.label}</div>
+                           </div>
+                         ))}
+                      </div>
+
+                      {/* Animated Graph Placeholder */}
+                      <div className="relative h-[200px] w-full bg-surface-3 rounded-2xl border border-white/5 p-6 overflow-hidden">
+                         <div className="absolute inset-0 bg-grid opacity-10" />
+                         <div className="relative h-full w-full flex items-end justify-between gap-2">
+                            {[20, 40, 30, 60, 50, 80, 70, 100, 90].map((h, i) => (
+                              <motion.div
+                                key={i}
+                                initial={{ height: 0 }}
+                                whileInView={{ height: `${h}%` }}
+                                transition={{ delay: i * 0.05, duration: 0.8 }}
+                                className="flex-1 bg-brand-orange/20 rounded-t-lg relative group/bar"
+                              >
+                                 <div className="absolute top-0 left-0 right-0 h-1 bg-brand-orange group-hover:bg-brand-orange-light transition-colors" />
+                              </motion.div>
+                            ))}
+                         </div>
+                         <div className="absolute top-4 right-4 flex items-center gap-2">
+                            <div className="w-2 h-2 rounded-full bg-brand-orange animate-pulse" />
+                            <span className="text-[10px] font-bold text-brand-orange uppercase tracking-widest">Growth Index</span>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
+
+        {/* Global Differentiator */}
+        <section className="mt-48 mb-32">
+           <div className="text-center mb-24">
+              <span className="text-brand-orange text-[10px] font-bold uppercase tracking-[0.4em] mb-4 block">Our Advantage</span>
+              <h2 className="text-4xl md:text-7xl font-bold uppercase text-white tracking-tight leading-none">Institutional Infrastructure.</h2>
+           </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                { icon: <Shield size={20} />, title: "Zero Fraud", desc: "Military-grade detection engine." },
+                { icon: <TrendingUp size={20} />, title: "LTV Optimization", desc: "Targeting high-value user nodes." },
+                { icon: <Globe size={20} />, title: "Global Access", desc: "Direct 500+ publisher network." },
+                { icon: <BarChart2 size={20} />, title: "Live Analytics", desc: "24/7 transparent performance data." }
+              ].map((item, i) => (
+                <div key={i} className="p-10 bg-surface-2 border border-white/5 rounded-3xl text-center group">
+                   <div className="w-12 h-12 mx-auto bg-brand-orange/10 rounded-2xl flex items-center justify-center text-brand-orange mb-8 group-hover:scale-110 transition-transform">
+                     {item.icon}
+                   </div>
+                   <h3 className="text-white font-bold uppercase tracking-tight mb-4">{item.title}</h3>
+                   <p className="text-white/30 text-sm">{item.desc}</p>
+                </div>
+              ))}
+           </div>
+        </section>
+
+        {/* Final CTA */}
+        <div className="bg-surface-2 border border-white/5 p-16 md:p-32 rounded-[3rem] text-center relative overflow-hidden group">
+             <div className="absolute top-0 left-0 w-full h-full bg-brand-orange/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+             <div className="relative z-10 max-w-2xl mx-auto">
+                <span className="text-brand-orange text-[10px] font-bold uppercase tracking-[0.5em] mb-10 block">Protocol Initiation</span>
+                <h2 className="text-5xl md:text-7xl font-bold mb-12 uppercase text-white tracking-tight leading-[0.9]">Deploy your<br /><span className="text-white/40 italic">success case.</span></h2>
+                <button 
+                    className="px-12 py-5 bg-brand-orange text-black text-[12px] font-bold uppercase tracking-[0.4em] transition-all hover:bg-brand-orange-light shadow-orange-glow" 
+                    onClick={openGetStarted}
+                >
+                    Get Free Growth Audit
+                </button>
+             </div>
+        </div>
+      </div>
+    </main>
   );
 }

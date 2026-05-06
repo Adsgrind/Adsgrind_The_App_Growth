@@ -64,21 +64,20 @@ export async function subscribeToNewsletter(email: string) {
 
       // User Confirmation
       await transporter.sendMail({
-        from: `"Adsgrind Strategy" <${smtpUser}>`,
+        from: `"Adsgrind Insights" <${smtpUser}>`,
         to: email,
-        subject: `Protocol Initiated: Welcome to Adsgrind`,
+        subject: `You're In: Welcome to Adsgrind Insights`,
         html: `
           <div style="background-color: #000000; color: #ffffff; padding: 80px 40px; font-family: 'Inter', sans-serif; text-align: center; border: 1px solid #333333;">
-            <img src="${logoUrl}" width="60" style="margin-bottom: 40px; filter: grayscale(100%);">
-            <h1 style="font-weight: bold; text-transform: uppercase; letter-spacing: 8px; font-size: 24px; margin-bottom: 20px;">Protocol Initiated.</h1>
-            <p style="color: #666666; font-size: 14px; line-height: 1.8; max-width: 400px; margin: 0 auto 50px auto; text-transform: uppercase; letter-spacing: 1px;">
-              You have successfully integrated into the Adsgrind intelligence feed. 
-              Engineered performance insights and institutional growth data will follow.
+            <img src="${logoUrl}" width="50" style="margin-bottom: 40px; filter: grayscale(100%);">
+            <h1 style="font-weight: bold; text-transform: uppercase; letter-spacing: 4px; font-size: 28px; margin-bottom: 20px;">You're In.</h1>
+            <p style="color: #999999; font-size: 15px; line-height: 1.8; max-width: 450px; margin: 0 auto 50px auto;">
+              Thanks for subscribing to Adsgrind Insights. You’ll receive performance marketing trends, app growth strategies, campaign intelligence, and scaling insights directly in your inbox.
             </p>
             <div style="margin-top: 40px;">
-              <a href="https://adsgrind.com" style="display: inline-block; background: #ffffff; color: #000000; padding: 18px 40px; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 3px;">Explore Infrastructure</a>
+              <a href="https://adsgrind.com/blog" style="display: inline-block; background: #ffffff; color: #000000; padding: 18px 40px; text-decoration: none; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; border-radius: 4px;">Explore Insights</a>
             </div>
-            <p style="margin-top: 60px; font-size: 10px; color: #333333; letter-spacing: 2px; text-transform: uppercase;">© 2026 Adsgrind. All Rights Reserved.</p>
+            <p style="margin-top: 60px; font-size: 10px; color: #444444; letter-spacing: 2px; text-transform: uppercase;">© 2026 Adsgrind. All Rights Reserved.</p>
           </div>
         `
       });
